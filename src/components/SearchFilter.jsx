@@ -1,20 +1,17 @@
 import React from "react";
-import { Search, Grid, List } from "lucide-react";
+import { Search } from "lucide-react";
 
 const SearchFilter = ({ darkmode }) => {
   return (
-    <div className="flex flex-wrap justify-between items-center gap-2 my-8">
+    <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 my-8">
+      {/* Search Box */}
       <div
-        className={`flex items-center px-3 py-2 rounded-md flex-1 max-w-lg ${
-          darkmode ? "bg-[#1a2330]" : "bg-gray-100"
-        } border ${
-          darkmode ? "border-gray-600" : "border-gray-300"
+        className={`flex items-center px-3 py-2 rounded-md w-full sm:max-w-lg ${
+          darkmode ? "bg-[#1a2330] border border-gray-600" : "bg-gray-100 border border-gray-300"
         }`}
       >
         <Search
-          className={`${
-            darkmode ? "text-gray-300" : "text-gray-500"
-          } transition-colors duration-200`}
+          className={`${darkmode ? "text-gray-300" : "text-gray-500"} transition-colors duration-200`}
           size={20}
         />
         <input
@@ -28,9 +25,10 @@ const SearchFilter = ({ darkmode }) => {
         />
       </div>
 
-      <div className="flex items-center gap-4">
+      {/* Filters */}
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 w-full sm:w-auto">
         <select
-          className={`${
+          className={`w-full sm:w-auto ${
             darkmode
               ? "bg-[#1a2330] text-gray-200 border border-gray-600"
               : "bg-gray-100 text-gray-700 border border-gray-300"
@@ -44,7 +42,7 @@ const SearchFilter = ({ darkmode }) => {
         </select>
 
         <select
-          className={`${
+          className={`w-full sm:w-auto ${
             darkmode
               ? "bg-[#1a2330] text-gray-200 border border-gray-600"
               : "bg-gray-100 text-gray-700 border border-gray-300"
@@ -56,7 +54,7 @@ const SearchFilter = ({ darkmode }) => {
         </select>
 
         <select
-          className={`${
+          className={`w-full sm:w-auto ${
             darkmode
               ? "bg-[#1a2330] text-gray-200 border border-gray-600"
               : "bg-gray-100 text-gray-700 border border-gray-300"
@@ -66,20 +64,6 @@ const SearchFilter = ({ darkmode }) => {
           <option>Date (Oldest)</option>
         </select>
 
-        <div className="flex gap-2">
-          {/* Grid Icon with better hover effect */}
-          <Grid
-            className={`cursor-pointer ${
-              darkmode ? "text-gray-300" : "text-gray-500"
-            } hover:text-blue-500 transition-colors duration-200`}
-          />
-          {/* List Icon with better hover effect */}
-          <List
-            className={`cursor-pointer ${
-              darkmode ? "text-gray-300" : "text-gray-500"
-            } hover:text-blue-500 transition-colors duration-200`}
-          />
-        </div>
       </div>
     </div>
   );
