@@ -1,23 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { Bell, User } from "lucide-react";
+import { Bell, User, Menu } from "lucide-react";
 import sunIcon from "/lightMode.svg";
 import moonIcon from "/nightMode.svg";
 
 const Navbar = ({ darkmode, setDarkmode }) => {
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const handleMenuToggle = () => {
+    setMenuOpen(!menuOpen);
+  };
+
   return (
     <nav
-      className={`sticky top-4 z-50 mx-auto w-[95%] rounded-2xl backdrop-blur-md bg-white/10 dark:bg-[#f9fafb
-]/30 shadow-lg flex items-center justify-between px-8 py-3 transition-all duration-300`}
+      className={`sticky top-4 z-50 mx-auto w-[95%] rounded-2xl backdrop-blur-md bg-white/10 dark:bg-[#f9fafb]/30 shadow-lg flex items-center justify-between px-8 py-3 transition-all duration-300`}
     >
       {/* Left: Logo */}
       <div className="flex items-center gap-2">
         <img
           src="/FindItLogo.svg"
           alt="FindIt Logo"
-          className={`w-6 h-6 object-contain ${
-            darkmode ? "invert" : ""
-          } transition-all duration-300`}
+          className={`w-6 h-6 object-contain ${darkmode ? "invert" : ""} transition-all duration-300`}
         />
         <span
           className={`${
@@ -28,11 +31,11 @@ const Navbar = ({ darkmode, setDarkmode }) => {
         </span>
       </div>
 
-      {/* Center: Links */}
+      {/* Center: Links (hidden on small screens) */}
       <ul
         className={`flex gap-8 text-lg ${
           darkmode ? "text-gray-200" : "text-gray-800"
-        }`}
+        } hidden md:flex`}
       >
         <li className="cursor-pointer hover:text-blue-500">
           <Link to="/">Home</Link>
@@ -53,7 +56,7 @@ const Navbar = ({ darkmode, setDarkmode }) => {
 
       {/* Right: Icons */}
       <div className="flex items-center gap-5">
-        {/* Dark Mode Button */}
+        {/* Dark Mode Toggle */}
         <button
           onClick={() => setDarkmode(!darkmode)}
           className={`p-2 rounded-full transition-all duration-300 hover:scale-110 ${
@@ -75,19 +78,52 @@ const Navbar = ({ darkmode, setDarkmode }) => {
           )}
         </button>
 
-        {/* Bell Icon */}
-        <Bell
-          className={`w-6 h-6 cursor-pointer ${
-            darkmode ? "text-white" : "text-gray-800"
-          } hover:text-blue-500`}
-        />
-
         {/* Profile Icon */}
         <User
           className={`w-6 h-6 cursor-pointer ${
             darkmode ? "text-white" : "text-gray-800"
           } hover:text-blue-500`}
         />
+      </div>
+
+      {/* Hamburger for Mobile */}
+      <div className="md:hidden flex items-center gap-4">
+        <button
+          onClick={handleMenuToggle}
+          className={`p-2 rounded-full transition-all duration-300 ${
+            darkmode ? "bg-gray-700" : "bg-gray-200"
+          }`}
+        >
+          <Menu
+            className={`w-6 h-6 ${
+              darkmode ? "text-white" : "text-gray-800"
+            }`}
+          />
+        </button>
+      </div>
+
+      {/* Mobile Menu */}
+      <div
+        className={`${
+          menuOpen ? "flex" : "hidden"
+        } flex-col absolute top-16 left-0 right-0 px-6 py-4 md:hidden z-50 rounded-b-2xl transition-all duration-300 ${
+          darkmode
+            ? "bg-[#253244] text-gray-200"
+            : "bg-white text-gray-800"
+        } shadow-lg`}
+      >
+        <ul className="flex flex-col gap-4 text-lg p-4 border-2 rounded-lg">
+          {["Home", "Lost Items", "Found Items", "My Posts", "Help"].map((item, i) => (
+            <li key={i} className="cursor-pointer hover:text-blue-500">
+              <Link
+                to={`/${item.toLowerCase().replace(/\s+/g, "-")}`}
+                onClick={handleMenuToggle}
+              >
+                {item}
+              </Link>
+            </li>
+          ))}
+        </ul>
       </div>
     </nav>
   );
