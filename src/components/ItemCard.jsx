@@ -1,16 +1,16 @@
 import React from "react";
 
-const ItemCard = ({ status, title, description, user, darkmode, image }) => {
+const ItemCard = ({ status, title, description, location, date, image, darkmode }) => {
   return (
     <div
       className={`${
-        darkmode ? "bg-[#1a2330]" : "bg-white"
-      } shadow-lg rounded-lg p-6 flex flex-col gap-4 transition-all duration-300 ease-in-out hover:shadow-xl`}
+        darkmode ? "bg-[#364358]" : "bg-white"
+      } shadow-lg rounded-lg p-6 flex flex-col gap-4 transition-all duration-300 ease-in-out hover:shadow-xl hover:scale-105`}
     >
       {/* Image Display */}
       <div
         className={`${
-          darkmode ? "bg-gray-700" : "bg-gray-200"
+          darkmode ? "bg-gray-600" : "bg-gray-200"
         } h-50 rounded-md mb-4 bg-cover bg-center`}
         style={{
           backgroundImage: image ? `url(${image})` : "none",
@@ -27,7 +27,7 @@ const ItemCard = ({ status, title, description, user, darkmode, image }) => {
         {/* Status */}
         <span
           className={`${
-            darkmode ? "text-blue-400" : "text-blue-600"
+            darkmode ? "text-teal-400" : "text-teal-600"
           } text-sm font-medium`}
         >
           {status}
@@ -36,7 +36,7 @@ const ItemCard = ({ status, title, description, user, darkmode, image }) => {
         {/* Title */}
         <h3
           className={`${
-            darkmode ? "text-gray-100" : "text-gray-800"
+            darkmode ? "text-gray-100" : "text-gray-900"
           } text-xl font-semibold`}
         >
           {title}
@@ -45,28 +45,37 @@ const ItemCard = ({ status, title, description, user, darkmode, image }) => {
         {/* Description */}
         <p
           className={`${
-            darkmode ? "text-gray-400" : "text-gray-600"
+            darkmode ? "text-gray-400" : "text-gray-700"
           } text-sm`}
         >
           {description}
         </p>
 
+        {/* Location and Date */}
+        <div className="flex justify-between text-sm mt-2">
+          <p
+            className={`${
+              darkmode ? "text-gray-500" : "text-gray-600"
+            }`}
+          >
+            {location}
+          </p>
+          <p
+            className={`${
+              darkmode ? "text-gray-500" : "text-gray-600"
+            }`}
+          >
+            {date}
+          </p>
+        </div>
+
         {/* Footer */}
         <div className="flex items-center justify-between mt-4">
-          {/* User */}
-          <span
-            className={`${
-              darkmode ? "text-gray-400" : "text-gray-500"
-            } text-sm`}
-          >
-            {user}
-          </span>
-
           {/* Contact Button */}
           <button
             className={`${
               darkmode ? "text-blue-400" : "text-blue-600"
-            } hover:underline text-sm transition duration-200 ease-in-out hover:text-blue-500`}
+            } hover:text-blue-500 text-sm font-semibold transition duration-200 ease-in-out hover:underline`}
           >
             Contact
           </button>

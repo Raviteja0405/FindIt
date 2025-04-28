@@ -1,11 +1,15 @@
 import React from "react";
 
-const Footer = () => {
+const Footer = ({ darkmode }) => {
   return (
-    <footer className="flex items-center justify-center w-full h-24 border-t dark:border-gray-700">
+    <footer
+      className={`flex items-center justify-center w-full h-10 mt-5 p-7 border-t ${
+        darkmode ? "border-gray-700 text-gray-200" : "border-gray-200 text-gray-600"
+      }`}
+    >
       <div className="flex items-center justify-center">
-        <p className="text-sm text-gray-600 dark:text-gray-300">
-          Copyright &copy; 2023 FindIt. All rights reserved.
+        <p className="text-sm">
+          Copyright &copy; 2025 FindIt. All rights reserved.
         </p>
       </div>
     </footer>

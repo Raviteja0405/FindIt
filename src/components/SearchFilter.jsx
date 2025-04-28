@@ -3,7 +3,7 @@ import { Search } from "lucide-react";
 
 const SearchFilter = ({ darkmode }) => {
   return (
-    <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 my-8">
+    <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 my-5">
       {/* Search Box */}
       <div
         className={`flex items-center px-3 py-2 rounded-md w-full sm:max-w-lg ${

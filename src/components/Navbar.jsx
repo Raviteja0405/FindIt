@@ -13,14 +13,18 @@ const Navbar = ({ darkmode, setDarkmode }) => {
 
   return (
     <nav
-      className={`sticky top-4 z-50 mx-auto w-[95%] rounded-2xl backdrop-blur-md bg-white/10 dark:bg-[#f9fafb]/30 shadow-lg flex items-center justify-between px-8 py-3 transition-all duration-300`}
+      className={`sticky top-4 z-50 mx-auto w-[90%] rounded-2xl backdrop-blur-md ${
+        darkmode ? "bg-gray-500/30" : "bg-white/10"
+      } shadow-lg flex items-center justify-between px-8 py-3 transition-all duration-300`}
     >
       {/* Left: Logo */}
-      <div className="flex items-center gap-2">
+      <Link to="/" className="flex items-center gap-2">
         <img
           src="/FindItLogo.svg"
           alt="FindIt Logo"
-          className={`w-6 h-6 object-contain ${darkmode ? "invert" : ""} transition-all duration-300`}
+          className={`w-6 h-6 object-contain ${
+            darkmode ? "invert" : ""
+          } transition-all duration-300`}
         />
         <span
           className={`${
@@ -29,7 +33,7 @@ const Navbar = ({ darkmode, setDarkmode }) => {
         >
           FindIt
         </span>
-      </div>
+      </Link>
 
       {/* Center: Links (hidden on small screens) */}
       <ul
@@ -50,7 +54,7 @@ const Navbar = ({ darkmode, setDarkmode }) => {
           <Link to="/my-posts">My Posts</Link>
         </li>
         <li className="cursor-pointer hover:text-blue-500">
-          <Link to="/report-item">Help</Link>
+          <Link to="/report-item">Report Item</Link>
         </li>
       </ul>
 
@@ -95,9 +99,7 @@ const Navbar = ({ darkmode, setDarkmode }) => {
           }`}
         >
           <Menu
-            className={`w-6 h-6 ${
-              darkmode ? "text-white" : "text-gray-800"
-            }`}
+            className={`w-6 h-6 ${darkmode ? "text-white" : "text-gray-800"}`}
           />
         </button>
       </div>
@@ -107,23 +109,36 @@ const Navbar = ({ darkmode, setDarkmode }) => {
         className={`${
           menuOpen ? "flex" : "hidden"
         } flex-col absolute top-16 left-0 right-0 px-6 py-4 md:hidden z-50 rounded-b-2xl transition-all duration-300 ${
-          darkmode
-            ? "bg-[#253244] text-gray-200"
-            : "bg-white text-gray-800"
+          darkmode ? "bg-[#253244] text-gray-200" : "bg-white text-gray-800"
         } shadow-lg`}
       >
-        <ul className="flex flex-col gap-4 text-lg p-4 border-2 rounded-lg">
-          {["Home", "Lost Items", "Found Items", "My Posts", "Help"].map((item, i) => (
-            <li key={i} className="cursor-pointer hover:text-blue-500">
-              <Link
-                to={`/${item.toLowerCase().replace(/\s+/g, "-")}`}
-                onClick={handleMenuToggle}
-              >
-                {item}
-              </Link>
-            </li>
-          ))}
-        </ul>
+      <ul className="flex flex-col gap-4 text-lg p-4 border-2 rounded-lg">
+        <li className="cursor-pointer hover:text-blue-500">
+          <Link to="/" onClick={handleMenuToggle}>
+            Home
+          </Link>
+        </li>
+        <li className="cursor-pointer hover:text-blue-500">
+          <Link to="/lost-items" onClick={handleMenuToggle}>
+            Lost Items
+          </Link>
+        </li>
+        <li className="cursor-pointer hover:text-blue-500">
+          <Link to="/found-items" onClick={handleMenuToggle}>
+            Found Items
+          </Link>
+        </li>
+        {/* <li className="cursor-pointer hover:text-blue-500">
+          <Link to="/my-posts" onClick={handleMenuToggle}>
+            My Posts
+          </Link>
+        </li> */}
+        <li className="cursor-pointer hover:text-blue-500">
+          <Link to="/report-item" onClick={handleMenuToggle}>
+            Report Item
+          </Link>
+        </li>
+      </ul>
       </div>
     </nav>
   );
