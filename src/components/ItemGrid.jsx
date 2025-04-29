@@ -1,8 +1,7 @@
 import React from "react";
 import ItemCard from "./ItemCard";
 
-const ItemGrid = ({darkmode, items}) => {
-
+const ItemGrid = ({ darkmode, items, onEdit, onDelete }) => {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
       {items.map((item, index) => (
@@ -15,6 +14,8 @@ const ItemGrid = ({darkmode, items}) => {
           date={item.date}
           image={item.image}
           darkmode={darkmode}
+          onEdit={onEdit ? () => onEdit(item) : null}
+          onDelete={onDelete ? () => onDelete(item.id) : null}
         />
       ))}
     </div>

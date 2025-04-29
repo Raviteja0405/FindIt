@@ -13,7 +13,7 @@ const lostItemsData = [
     description: "Lost near the campus cafeteria. Contains ID and some cash.",
     location: "Cafeteria",
     date: "2025-04-24",
-    image: "https://via.placeholder.com/300x200?text=Wallet",
+    image: "https://teakwoodleathers.com/cdn/shop/products/T_WLT_140_BL..1_1080x.jpg?v=1640337382",
   },
   {
     id: 2,
@@ -22,7 +22,7 @@ const lostItemsData = [
     description: "Left behind in the lecture hall after class.",
     location: "Lecture Hall A",
     date: "2025-04-23",
-    image: "https://via.placeholder.com/300x200?text=Laptop",
+    image: "https://images.pexels.com/photos/5951553/pexels-photo-5951553.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
   },
   {
     id: 3,
@@ -31,7 +31,7 @@ const lostItemsData = [
     description: "Lost somewhere in the sports ground during practice.",
     location: "Sports Ground",
     date: "2025-04-22",
-    image: "https://via.placeholder.com/300x200?text=Water+Bottle",
+    image: "https://m.media-amazon.com/images/I/4121l07JxoL.jpg",
   },
 ];
 

@@ -13,7 +13,7 @@ const foundItemsData = [
     description: "Found near the library. Contains books and a water bottle.",
     location: "Library",
     date: "2025-04-27",
-    image: "https://via.placeholder.com/300x200?text=Backpack",
+    image: "https://assets.ajio.com/medias/sys_master/root/20240527/nxpe/6654a8e205ac7d77bb7fd58e/-473Wx593H-4933831210-multi-MODEL.jpg",
   },
   {
     id: 2,
@@ -22,7 +22,7 @@ const foundItemsData = [
     description: "Found at cafeteria. Black case, locked screen.",
     location: "Cafeteria",
     date: "2025-04-26",
-    image: "https://via.placeholder.com/300x200?text=Smartphone",
+    image: "https://www.avast.com/hubfs/New_Avast_Academy/find_my_phone_academy/Academy-How-to-Find-a-Lost-or-Stolen-Android-Phone-Thumb.jpg",
   },
   {
     id: 3,
@@ -31,7 +31,7 @@ const foundItemsData = [
     description: "Set of keys found near the main auditorium.",
     location: "Auditorium",
     date: "2025-04-25",
-    image: "https://via.placeholder.com/300x200?text=Keys",
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYHPV0lFUcsT1PpampIrY1gzFfxP0hHtC_Rw&s",
   },
 ];
 

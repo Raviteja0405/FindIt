@@ -128,11 +128,11 @@ const Navbar = ({ darkmode, setDarkmode }) => {
             Found Items
           </Link>
         </li>
-        {/* <li className="cursor-pointer hover:text-blue-500">
+        <li className="cursor-pointer hover:text-blue-500">
           <Link to="/my-posts" onClick={handleMenuToggle}>
             My Posts
           </Link>
-        </li> */}
+        </li>
         <li className="cursor-pointer hover:text-blue-500">
           <Link to="/report-item" onClick={handleMenuToggle}>
             Report Item
