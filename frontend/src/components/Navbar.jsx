@@ -13,7 +13,7 @@ const Navbar = ({ darkmode, setDarkmode }) => {
 
   return (
     <nav
-      className={`sticky top-4 z-50 mx-auto w-[90%] rounded-2xl backdrop-blur-md ${
+      className={`sticky top-4 z-50 mx-auto w-[70%] rounded-2xl backdrop-blur-md ${
         darkmode ? "bg-gray-500/30" : "bg-white/10"
       } shadow-lg flex items-center justify-between px-8 py-3 transition-all duration-300`}
     >
@@ -43,12 +43,6 @@ const Navbar = ({ darkmode, setDarkmode }) => {
       >
         <li className="cursor-pointer hover:text-blue-500">
           <Link to="/">Home</Link>
-        </li>
-        <li className="cursor-pointer hover:text-blue-500">
-          <Link to="/lost-items">Lost Items</Link>
-        </li>
-        <li className="cursor-pointer hover:text-blue-500">
-          <Link to="/found-items">Found Items</Link>
         </li>
         <li className="cursor-pointer hover:text-blue-500">
           <Link to="/my-posts">My Posts</Link>
@@ -116,16 +110,6 @@ const Navbar = ({ darkmode, setDarkmode }) => {
         <li className="cursor-pointer hover:text-blue-500">
           <Link to="/" onClick={handleMenuToggle}>
             Home
-          </Link>
-        </li>
-        <li className="cursor-pointer hover:text-blue-500">
-          <Link to="/lost-items" onClick={handleMenuToggle}>
-            Lost Items
-          </Link>
-        </li>
-        <li className="cursor-pointer hover:text-blue-500">
-          <Link to="/found-items" onClick={handleMenuToggle}>
-            Found Items
           </Link>
         </li>
         <li className="cursor-pointer hover:text-blue-500">
