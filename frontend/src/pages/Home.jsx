@@ -25,7 +25,7 @@ const Home = ({ darkmode, setDarkmode }) => {
     try {
       // Fix your localhost port if needed, here just example with port 3000
       const res = await fetch(
-        `http://localhost:3000/api/items?page=${pageNum}&limit=10`
+        `http://localhost:3000/api/items?page=${pageNum}&limit=3`
       );
       if (!res.ok) throw new Error("Failed to fetch items");
       const data = await res.json();
