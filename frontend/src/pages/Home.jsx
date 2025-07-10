@@ -12,22 +12,31 @@ const Home = ({ darkmode, setDarkmode }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
+  // Add filters state here
+  const [filters, setFilters] = useState({
+    query: "",
+    category: "",
+    type: "",
+    sort: "newest",
+  });
+
   const fetchItems = async (pageNum = 1) => {
     setLoading(true);
     try {
-      const res = await fetch(`http://localhost:3000/api/items?page=${pageNum}&limit=3`);
+      // Fix your localhost port if needed, here just example with port 3000
+      const res = await fetch(`http://localhost:3000/api/items?page=${pageNum}&limit=10`);
       if (!res.ok) throw new Error("Failed to fetch items");
       const data = await res.json();
-      // console.log(items);
+
       if (data.length === 0) {
-        setHasMore(false); // No more items to load
+        setHasMore(false);
       } else {
         setItems((prev) => {
           const combined = [...prev, ...data];
           const uniqueItems = Array.from(new Map(combined.map(item => [item._id, item])).values());
           return uniqueItems;
         });
-        setPage(pageNum); // Update page after successful load
+        setPage(pageNum);
       }
     } catch (err) {
       setError(err.message);
@@ -37,7 +46,7 @@ const Home = ({ darkmode, setDarkmode }) => {
   };
 
   useEffect(() => {
-    fetchItems(); // load first page
+    fetchItems();
   }, []);
 
   const handleLoadMore = () => {
@@ -45,6 +54,29 @@ const Home = ({ darkmode, setDarkmode }) => {
       fetchItems(page + 1);
     }
   };
+
+  // Filter & sort items based on filters state
+  const filteredItems = items
+    .filter((item) => {
+      const matchesQuery = filters.query
+        ? item.title.toLowerCase().includes(filters.query.toLowerCase())
+        : true;
+      const matchesCategory = filters.category
+        ? item.category === filters.category
+        : true;
+      const matchesType = filters.type
+        ? item.type.toLowerCase() === filters.type.toLowerCase()
+        : true;
+
+      return matchesQuery && matchesCategory && matchesType;
+    })
+    .sort((a, b) => {
+      if (filters.sort === "newest") {
+        return new Date(b.createdAt) - new Date(a.createdAt);
+      } else {
+        return new Date(a.createdAt) - new Date(b.createdAt);
+      }
+    });
 
   return (
     <div className={`${darkmode ? "bg-[#1a2330]" : "bg-gray-50"} min-h-screen transition-colors duration-300`}>
@@ -56,7 +88,8 @@ const Home = ({ darkmode, setDarkmode }) => {
           subtitle="Reconnect with your lost items or help others find theirs"
           type="both"
         />
-        <SearchFilter darkmode={darkmode} />
+        {/* Pass filters and setFilters to SearchFilter */}
+        <SearchFilter darkmode={darkmode} filters={filters} onFilterChange={setFilters} />
 
         {loading && items.length === 0 ? (
           <p className="text-center text-gray-600 mt-10">Loading items...</p>
@@ -64,7 +97,7 @@ const Home = ({ darkmode, setDarkmode }) => {
           <p className="text-center text-red-500 mt-10">{error}</p>
         ) : (
           <>
-            <ItemGrid darkmode={darkmode} items={items} />
+            <ItemGrid darkmode={darkmode} items={filteredItems} />
             {hasMore && (
               <div className="flex justify-center my-10">
                 <button

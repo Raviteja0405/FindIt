@@ -8,7 +8,7 @@ import ReportItem from "./pages/ReportItem";
 import MyPosts from "./pages/MyPosts";
 import EditItem from "./pages/EditItem";
 import Login from "./pages/Login";
-import ProfileSetup from "./pages/ProfileSetup";
+import Profile from "./pages/Profile";
 // import CompleteProfile from "./pages/CompleteProfile";
 
 const App = () => {
@@ -23,7 +23,7 @@ const App = () => {
         <Route path="/my-posts" element={<MyPosts darkmode={darkmode} setDarkmode={setDarkmode} />} />
         <Route path="/report-item" element={<ReportItem darkmode={darkmode} setDarkmode={setDarkmode} />} />
         <Route path="/login" element={<Login darkmode={darkmode} setDarkmode={setDarkmode} />} />
-        <Route path="/profile-setup" element={<ProfileSetup darkmode={darkmode} setDarkmode={setDarkmode} />} />
+        <Route path="/profile" element={<Profile darkmode={darkmode} setDarkmode={setDarkmode} />} />
         <Route path="/edit-item/:id" element={<EditItem darkmode={darkmode} setDarkmode={setDarkmode} />} />
         {/* <Route path="/complete-profile" element={<CompleteProfile darkmode={darkmode} setDarkmode={setDarkmode} />} />  */}
       </Routes>

@@ -1,15 +1,33 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { Link } from "react-router-dom";
-import { Bell, User, Menu } from "lucide-react";
+import { Menu } from "lucide-react";
 import sunIcon from "/lightMode.svg";
 import moonIcon from "/nightMode.svg";
 
 const Navbar = ({ darkmode, setDarkmode }) => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [user, setUser] = useState(null);
 
   const handleMenuToggle = () => {
     setMenuOpen(!menuOpen);
   };
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const res = await axios.get("http://localhost:3000/api/users/me", {
+          withCredentials: true,
+        });
+        setUser(res.data);
+      } catch (err) {
+        console.log("User not logged in. Error:", err);
+        setUser(null);
+      }
+    };
+
+    fetchUser();
+  }, []);
 
   return (
     <nav
@@ -77,11 +95,26 @@ const Navbar = ({ darkmode, setDarkmode }) => {
         </button>
 
         {/* Profile Icon */}
-        <User
-          className={`w-6 h-6 cursor-pointer ${
-            darkmode ? "text-white" : "text-gray-800"
-          } hover:text-blue-500`}
-        />
+        {user ? (
+          <Link to="/profile">
+            <img
+              src={user.photo}
+              alt="User"
+              className="w-9 h-9 rounded-full object-cover border-2 border-blue-500 hover:scale-105 transition"
+            />
+          </Link>
+        ) : (
+          <Link
+            to="/login"
+            className={`px-4 py-2 rounded-md text-sm font-semibold transition ${
+              darkmode
+                ? "bg-blue-600 text-white hover:bg-blue-700"
+                : "bg-blue-100 text-blue-800 hover:bg-blue-200"
+            }`}
+          >
+            Login
+          </Link>
+        )}
       </div>
 
       {/* Hamburger for Mobile */}
@@ -106,23 +139,23 @@ const Navbar = ({ darkmode, setDarkmode }) => {
           darkmode ? "bg-[#253244] text-gray-200" : "bg-white text-gray-800"
         } shadow-lg`}
       >
-      <ul className="flex flex-col gap-4 text-lg p-4 border-2 rounded-lg">
-        <li className="cursor-pointer hover:text-blue-500">
-          <Link to="/" onClick={handleMenuToggle}>
-            Home
-          </Link>
-        </li>
-        <li className="cursor-pointer hover:text-blue-500">
-          <Link to="/my-posts" onClick={handleMenuToggle}>
-            My Posts
-          </Link>
-        </li>
-        <li className="cursor-pointer hover:text-blue-500">
-          <Link to="/report-item" onClick={handleMenuToggle}>
-            Report Item
-          </Link>
-        </li>
-      </ul>
+        <ul className="flex flex-col gap-4 text-lg p-4 border-2 rounded-lg">
+          <li className="cursor-pointer hover:text-blue-500">
+            <Link to="/" onClick={handleMenuToggle}>
+              Home
+            </Link>
+          </li>
+          <li className="cursor-pointer hover:text-blue-500">
+            <Link to="/my-posts" onClick={handleMenuToggle}>
+              My Posts
+            </Link>
+          </li>
+          <li className="cursor-pointer hover:text-blue-500">
+            <Link to="/report-item" onClick={handleMenuToggle}>
+              Report Item
+            </Link>
+          </li>
+        </ul>
       </div>
     </nav>
   );

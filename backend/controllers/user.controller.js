@@ -20,18 +20,26 @@ export const updateProfile = async (req, res) => {
     const updated = await User.findByIdAndUpdate(
       req.user._id,
       {
-        "contactInfo.phone": phone,
-        "contactInfo.showPhone": showPhone,
-        "contactInfo.showEmail": showEmail,
+        $set: {
+          "contactInfo.phone": phone,
+          "contactInfo.showPhone": showPhone,
+          "contactInfo.showEmail": showEmail,
+        },
       },
       { new: true }
     ).select("-__v");
 
+    if (!updated) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
     res.json(updated);
   } catch (err) {
+    console.error("Update error:", err);
     res.status(500).json({ message: "Failed to update profile" });
   }
 };
+
 
 // @desc Complete user profile (called after Google OAuth)
 export const completeProfile = async (req, res) => {

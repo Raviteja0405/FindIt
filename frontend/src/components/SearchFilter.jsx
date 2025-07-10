@@ -1,7 +1,12 @@
 import React from "react";
 import { Search } from "lucide-react";
 
-const SearchFilter = ({ darkmode }) => {
+const SearchFilter = ({ darkmode, filters, onFilterChange }) => {
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    onFilterChange({ ...filters, [name]: value });
+  };
+
   return (
     <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 my-5">
       {/* Search Box */}
@@ -16,6 +21,9 @@ const SearchFilter = ({ darkmode }) => {
         />
         <input
           type="text"
+          name="query"
+          value={filters.query}
+          onChange={handleChange}
           placeholder="Search items..."
           className={`ml-2 outline-none w-full rounded-md ${
             darkmode
@@ -28,44 +36,52 @@ const SearchFilter = ({ darkmode }) => {
       {/* Filters */}
       <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 w-full sm:w-auto">
         <select
+          name="category"
+          value={filters.category}
+          onChange={handleChange}
           className={`w-full sm:w-auto ${
             darkmode
               ? "bg-[#1a2330] text-gray-200 border border-gray-600"
               : "bg-gray-100 text-gray-700 border border-gray-300"
           } p-2 rounded-md`}
         >
-          <option>All Categories </option>
-          <option>Electronics</option>
-          <option>Books</option>
-          <option>Clothing</option>
-          <option>Bags & Containers</option>
-          <option>Documents & Papers</option>
-          <option>Other</option>
+          <option value="">All Categories</option>
+          <option value="Electronics">Electronics</option>
+          <option value="Books">Books</option>
+          <option value="Clothing">Clothing</option>
+          <option value="Bags & Containers">Bags & Containers</option>
+          <option value="Documents & Papers">Documents & Papers</option>
+          <option value="Other">Other</option>
         </select>
 
         <select
+          name="type"
+          value={filters.type}
+          onChange={handleChange}
           className={`w-full sm:w-auto ${
             darkmode
               ? "bg-[#1a2330] text-gray-200 border border-gray-600"
               : "bg-gray-100 text-gray-700 border border-gray-300"
           } p-2 rounded-md`}
         >
-          <option>All</option>
-          <option>Lost</option>
-          <option>Found</option>
+          <option value="">All</option>
+          <option value="lost">Lost</option>
+          <option value="found">Found</option>
         </select>
 
         <select
+          name="sort"
+          value={filters.sort}
+          onChange={handleChange}
           className={`w-full sm:w-auto ${
             darkmode
               ? "bg-[#1a2330] text-gray-200 border border-gray-600"
               : "bg-gray-100 text-gray-700 border border-gray-300"
           } p-2 rounded-md`}
         >
-          <option>Date (Newest)</option>
-          <option>Date (Oldest)</option>
+          <option value="newest">Date (Newest)</option>
+          <option value="oldest">Date (Oldest)</option>
         </select>
-
       </div>
     </div>
   );
