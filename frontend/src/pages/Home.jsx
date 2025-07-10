@@ -24,7 +24,9 @@ const Home = ({ darkmode, setDarkmode }) => {
     setLoading(true);
     try {
       // Fix your localhost port if needed, here just example with port 3000
-      const res = await fetch(`http://localhost:3000/api/items?page=${pageNum}&limit=10`);
+      const res = await fetch(
+        `http://localhost:3000/api/items?page=${pageNum}&limit=10`
+      );
       if (!res.ok) throw new Error("Failed to fetch items");
       const data = await res.json();
 
@@ -33,7 +35,9 @@ const Home = ({ darkmode, setDarkmode }) => {
       } else {
         setItems((prev) => {
           const combined = [...prev, ...data];
-          const uniqueItems = Array.from(new Map(combined.map(item => [item._id, item])).values());
+          const uniqueItems = Array.from(
+            new Map(combined.map((item) => [item._id, item])).values()
+          );
           return uniqueItems;
         });
         setPage(pageNum);
@@ -71,15 +75,17 @@ const Home = ({ darkmode, setDarkmode }) => {
       return matchesQuery && matchesCategory && matchesType;
     })
     .sort((a, b) => {
-      if (filters.sort === "newest") {
-        return new Date(b.createdAt) - new Date(a.createdAt);
-      } else {
-        return new Date(a.createdAt) - new Date(b.createdAt);
-      }
+      const dateA = new Date(a.date);
+      const dateB = new Date(b.date);
+      return filters.sort === "newest" ? dateB - dateA : dateA - dateB;
     });
 
   return (
-    <div className={`${darkmode ? "bg-[#1a2330]" : "bg-gray-50"} min-h-screen transition-colors duration-300`}>
+    <div
+      className={`${
+        darkmode ? "bg-[#1a2330]" : "bg-gray-50"
+      } min-h-screen transition-colors duration-300`}
+    >
       <Navbar darkmode={darkmode} setDarkmode={setDarkmode} />
       <div className="px-8 py-3 max-w-7xl mx-auto">
         <HeroSection
@@ -89,7 +95,11 @@ const Home = ({ darkmode, setDarkmode }) => {
           type="both"
         />
         {/* Pass filters and setFilters to SearchFilter */}
-        <SearchFilter darkmode={darkmode} filters={filters} onFilterChange={setFilters} />
+        <SearchFilter
+          darkmode={darkmode}
+          filters={filters}
+          onFilterChange={setFilters}
+        />
 
         {loading && items.length === 0 ? (
           <p className="text-center text-gray-600 mt-10">Loading items...</p>
@@ -112,7 +122,9 @@ const Home = ({ darkmode, setDarkmode }) => {
               </div>
             )}
             {!hasMore && (
-              <p className="text-center text-gray-500 my-6">🎉 You've seen everything!</p>
+              <p className="text-center text-gray-500 my-6">
+                🎉 You've seen everything!
+              </p>
             )}
           </>
         )}

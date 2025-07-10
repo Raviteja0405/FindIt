@@ -87,19 +87,34 @@ const ReportItem = ({ darkmode, setDarkmode }) => {
   };
 
   return (
-    <div className={`min-h-screen ${darkmode ? "bg-[#101828] text-white" : "bg-white text-black"}`}>
+    <div
+      className={`min-h-screen ${
+        darkmode ? "bg-[#101828] text-white" : "bg-white text-black"
+      }`}
+    >
       <Navbar darkmode={darkmode} setDarkmode={setDarkmode} />
 
-      <div className={`max-w-2xl mx-auto p-6 mt-8 rounded-lg shadow-md ${darkmode ? "bg-[#1B2431]" : "bg-gray-100"}`}>
-        <h1 className="text-3xl font-bold mb-6 text-center">Report Lost or Found Item</h1>
+      <div
+        className={`max-w-2xl mx-auto p-6 mt-8 rounded-lg shadow-md ${
+          darkmode ? "bg-[#1B2431]" : "bg-gray-100"
+        }`}
+      >
+        <h1 className="text-3xl font-bold mb-6 text-center">
+          Report Lost or Found Item
+        </h1>
 
         {checkingAuth ? (
-          <div className="text-center text-gray-400">Checking authentication...</div>
+          <div className="text-center text-gray-400">
+            Checking authentication...
+          </div>
         ) : (
           <form onSubmit={handleSubmit} className="flex flex-col gap-5">
             <div className="flex justify-center gap-6">
               {["lost", "found"].map((type) => (
-                <label key={type} className="flex items-center gap-2 cursor-pointer">
+                <label
+                  key={type}
+                  className="flex items-center gap-2 cursor-pointer"
+                >
                   <input
                     type="radio"
                     name="type"
@@ -119,7 +134,11 @@ const ReportItem = ({ darkmode, setDarkmode }) => {
               placeholder="Item Title"
               value={formData.title}
               onChange={handleChange}
-              className={`p-3 rounded-md border ${darkmode ? "bg-[#283142] border-gray-600 text-white" : "bg-white border-gray-300 text-black"}`}
+              className={`p-3 rounded-md border ${
+                darkmode
+                  ? "bg-[#283142] border-gray-600 text-white"
+                  : "bg-white border-gray-300 text-black"
+              }`}
               required
             />
 
@@ -129,7 +148,11 @@ const ReportItem = ({ darkmode, setDarkmode }) => {
               value={formData.description}
               onChange={handleChange}
               rows="4"
-              className={`p-3 rounded-md border resize-none ${darkmode ? "bg-[#283142] border-gray-600 text-white" : "bg-white border-gray-300 text-black"}`}
+              className={`p-3 rounded-md border resize-none ${
+                darkmode
+                  ? "bg-[#283142] border-gray-600 text-white"
+                  : "bg-white border-gray-300 text-black"
+              }`}
               required
             />
 
@@ -139,7 +162,11 @@ const ReportItem = ({ darkmode, setDarkmode }) => {
               placeholder="Where was it lost/found?"
               value={formData.location}
               onChange={handleChange}
-              className={`p-3 rounded-md border ${darkmode ? "bg-[#283142] border-gray-600 text-white" : "bg-white border-gray-300 text-black"}`}
+              className={`p-3 rounded-md border ${
+                darkmode
+                  ? "bg-[#283142] border-gray-600 text-white"
+                  : "bg-white border-gray-300 text-black"
+              }`}
               required
             />
 
@@ -147,7 +174,11 @@ const ReportItem = ({ darkmode, setDarkmode }) => {
               name="category"
               value={formData.category}
               onChange={handleChange}
-              className={`p-3 rounded-md border ${darkmode ? "bg-[#283142] border-gray-600 text-white" : "bg-white border-gray-300 text-black"}`}
+              className={`p-3 rounded-md border ${
+                darkmode
+                  ? "bg-[#283142] border-gray-600 text-white"
+                  : "bg-white border-gray-300 text-black"
+              }`}
               required
             >
               <option value="">Select Category</option>
@@ -164,7 +195,12 @@ const ReportItem = ({ darkmode, setDarkmode }) => {
               name="date"
               value={formData.date}
               onChange={handleChange}
-              className={`p-3 rounded-md border ${darkmode ? "bg-[#283142] border-gray-600 text-white" : "bg-white border-gray-300 text-black"}`}
+              max={new Date().toISOString().split("T")[0]} // 👈 restricts future dates
+              className={`p-3 rounded-md border ${
+                darkmode
+                  ? "bg-[#283142] border-gray-600 text-white"
+                  : "bg-white border-gray-300 text-black"
+              }`}
               required
             />
 
@@ -173,7 +209,11 @@ const ReportItem = ({ darkmode, setDarkmode }) => {
               name="image"
               accept="image/*"
               onChange={handleChange}
-              className={`p-2 rounded-md border ${darkmode ? "bg-[#283142] border-gray-600 text-white" : "bg-white border-gray-300 text-black"}`}
+              className={`p-2 rounded-md border ${
+                darkmode
+                  ? "bg-[#283142] border-gray-600 text-white"
+                  : "bg-white border-gray-300 text-black"
+              }`}
             />
             {formData.image && (
               <img
@@ -186,7 +226,9 @@ const ReportItem = ({ darkmode, setDarkmode }) => {
             <button
               type="submit"
               disabled={uploading}
-              className={`bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-md font-semibold transition-all ${uploading ? "opacity-50 cursor-not-allowed" : ""}`}
+              className={`bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-md font-semibold transition-all ${
+                uploading ? "opacity-50 cursor-not-allowed" : ""
+              }`}
             >
               {uploading ? "Uploading..." : "Submit Report"}
             </button>
