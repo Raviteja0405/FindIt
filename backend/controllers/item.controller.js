@@ -5,7 +5,7 @@ import fs from "fs";
 // @desc Create new Lost or Found item
 export const reportItem = async (req, res) => {
   try {
-    const { title, description, location, date, type } = req.body;
+    const { title, description, location, date, type, category } = req.body;
 
     if (!title || !location || !date || !type) {
       return res.status(400).json({ message: "All fields are required!" });
@@ -31,6 +31,7 @@ export const reportItem = async (req, res) => {
       description,
       location,
       date,
+      category,
       imageUrl,
       user: req.user._id,
     });
@@ -44,18 +45,24 @@ export const reportItem = async (req, res) => {
   }
 };
 
-// @desc Get all Lost or Found items
+// @desc Get all Lost or Found items with pagination
 export const getItems = async (req, res) => {
   try {
-    const { type } = req.query;
+    const { type, page = 1, limit = 3 } = req.query;
 
     const filter = {};
-    if (type === "lost" || type === "found") {
+    if (type === "Lost" || type === "Found") {
       filter.type = type;
     }
 
+    const pageNum = parseInt(page, 10);
+    const limitNum = parseInt(limit, 10);
+    const skip = (pageNum - 1) * limitNum;
+
     const items = await Item.find(filter)
       .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limitNum)
       .populate("user", "name email photo");
 
     res.json(items);
@@ -64,6 +71,46 @@ export const getItems = async (req, res) => {
     res.status(500).json({ message: "Error fetching items" });
   }
 };
+
+// @desc Update item by ID
+export const updateItem = async (req, res) => {
+  try {
+    const { title, description, location, date, type, category } = req.body;
+
+    const item = await Item.findById(req.params.id);
+    if (!item) return res.status(404).json({ message: "Item not found" });
+
+    if (item.user.toString() !== req.user._id.toString()) {
+      return res.status(403).json({ message: "Not authorized to update this item" });
+    }
+
+    // Handle image update if new image is uploaded
+    if (req.file) {
+      const result = await cloudinary.uploader.upload(req.file.path, {
+        folder: "findit_items",
+        transformation: [{ width: 800, height: 600, crop: "limit" }],
+      });
+      item.imageUrl = result.secure_url;
+      fs.unlinkSync(req.file.path); // Clean up local file
+    }
+
+    // Update fields
+    item.title = title || item.title;
+    item.description = description || item.description;
+    item.location = location || item.location;
+    item.date = date || item.date;
+    item.type = type || item.type;
+    item.category = category || item.category;
+
+    await item.save();
+
+    res.json({ message: "Item updated successfully", item });
+  } catch (err) {
+    console.error("Error updating item:", err);
+    res.status(500).json({ message: "Error updating item" });
+  }
+};
+
 
 // @desc Get items reported by current user
 export const getMyItems = async (req, res) => {

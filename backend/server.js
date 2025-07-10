@@ -9,7 +9,7 @@ dotenv.config();
 console.log(process.env.MONGO_URI);
 
 import connectDb from './utils/connectDB.util.js';
-import './config/passport.js'; // 🚨 Load passport config before routes
+import './config/passport.js';
 
 import authRoutes from './routes/auth.route.js';
 import itemRoutes from './routes/item.route.js';
@@ -33,7 +33,7 @@ app.use('/uploads', express.static('uploads'));
 // === Session Middleware (required for passport sessions) ===
 app.use(
   session({
-    secret: process.env.SESSION_SECRET || 'findit-secret',
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
     store: MongoStore.create({ mongoUrl: process.env.MONGO_URI }),
@@ -56,7 +56,7 @@ app.use('/api/users', userRoutes);
 app.use(errorHandler);
 
 // === Server ===
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`🚀 Server running at http://localhost:${PORT}`);
 });

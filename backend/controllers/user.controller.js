@@ -33,6 +33,32 @@ export const updateProfile = async (req, res) => {
   }
 };
 
+// @desc Complete user profile (called after Google OAuth)
+export const completeProfile = async (req, res) => {
+  try {
+    const user = req.user; // From passport session or JWT middleware
+
+    const { contactInfo } = req.body;
+
+    if (!contactInfo || !contactInfo.phone) {
+      return res.status(400).json({ message: "Phone number is required" });
+    }
+
+    user.contactInfo = {
+      phone: contactInfo.phone,
+      showPhone: contactInfo.showPhone || false,
+      showEmail: contactInfo.showEmail !== undefined ? contactInfo.showEmail : true,
+    };
+
+    await user.save();
+
+    res.status(200).json({ message: "Profile completed" });
+  } catch (err) {
+    console.error("Error in completeProfile:", err);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
 // ✅ Delete account + their items
 export const deleteMyAccount = async (req, res) => {
   try {

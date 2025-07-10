@@ -1,6 +1,17 @@
 import React from "react";
 
-const ItemCard = ({ status, title, description, location, date, image, darkmode, onEdit, onDelete }) => {
+const ItemCard = ({
+  type,
+  title,
+  description,
+  location,
+  date,
+  image,
+  category,
+  darkmode,
+  onEdit,
+  onDelete,
+}) => {
   return (
     <div
       className={`${
@@ -25,10 +36,29 @@ const ItemCard = ({ status, title, description, location, date, image, darkmode,
 
       {/* Content */}
       <div className="flex flex-col gap-2">
-        <span className={`text-sm font-medium ${darkmode ? "text-teal-300" : "text-teal-600"}`}>
-          {status}
-        </span>
+        <div className="flex items-center justify-between">
+          <span
+            className={`inline-block px-3 py-1 text-xs rounded-full font-medium w-fit 
+              ${
+                darkmode
+                  ? (type === "Lost" ? "bg-red-700 text-red-100" : "bg-green-700 text-green-100")
+                  : (type === "Lost" ? "bg-red-100 text-red-800" : "bg-green-100 text-green-800")
+              }`}
+          >
+            {type.charAt(0).toUpperCase() + type.slice(1)}
+          </span>
 
+          <span
+            className={`inline-block px-3 py-1 text-xs rounded-full font-medium w-fit 
+              ${
+                darkmode
+                  ? "bg-teal-700 text-white"
+                  : "bg-teal-100 text-teal-800"
+              }`}
+          >
+            {category}
+          </span>
+        </div>
         <h3 className="text-xl font-semibold">{title}</h3>
 
         <p className="text-sm">{description}</p>
@@ -42,7 +72,9 @@ const ItemCard = ({ status, title, description, location, date, image, darkmode,
         <div className="flex items-center justify-between mt-4">
           <button
             className={`text-sm font-semibold hover:underline transition ${
-              darkmode ? "text-blue-300 hover:text-blue-400" : "text-blue-600 hover:text-blue-800"
+              darkmode
+                ? "text-blue-300 hover:text-blue-400"
+                : "text-blue-600 hover:text-blue-800"
             }`}
           >
             Contact

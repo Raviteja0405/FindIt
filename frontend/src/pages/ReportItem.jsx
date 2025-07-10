@@ -16,6 +16,7 @@ const ReportItem = ({ darkmode, setDarkmode }) => {
     location: "",
     date: "",
     image: null,
+    category: "",
   });
 
   const [uploading, setUploading] = useState(false);
@@ -31,24 +32,34 @@ const ReportItem = ({ darkmode, setDarkmode }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // Simulate upload and storage logic
     setUploading(true);
 
     try {
-      let imageUrl = "";
+      const formPayload = new FormData();
+      formPayload.append("type", formData.type);
+      formPayload.append("title", formData.title);
+      formPayload.append("description", formData.description);
+      formPayload.append("location", formData.location);
+      formPayload.append("date", formData.date);
+      formPayload.append("category", formData.category);
       if (formData.image) {
-        imageUrl = URL.createObjectURL(formData.image); // Local preview URL
+        formPayload.append("image", formData.image);
       }
 
-      // Simulate storing the data
-      console.log("Item submitted:", {
-        ...formData,
-        imageUrl,
-        status: formData.type === "lost" ? "Lost" : "Found",
-        createdAt: new Date().toISOString(),
+      const res = await fetch("http://localhost:3000/api/items", {
+        method: "POST",
+        body: formPayload,
+        credentials: "include", // if you are using cookies/auth
       });
 
+      if (!res.ok) {
+        const errorData = await res.json();
+        throw new Error(errorData.message || "Failed to report item");
+      }
+
+      const result = await res.json();
+      console.log("Server response:", result);
+      alert(result.message || "Item reported successfully!");
       setFormData({
         type: initialType,
         title: "",
@@ -57,29 +68,39 @@ const ReportItem = ({ darkmode, setDarkmode }) => {
         date: "",
         image: null,
       });
-
-      setUploading(false);
-      alert("Item reported (simulated) successfully!");
       navigate("/my-posts");
-
     } catch (error) {
-      console.error("Simulated error reporting item:", error);
+      console.error("Error reporting item:", error);
+      alert(error.message || "Failed to report item");
+    } finally {
       setUploading(false);
-      alert("Failed to report item. Try again.");
     }
   };
 
   return (
-    <div className={`min-h-screen transition-colors duration-300 ${darkmode ? "bg-[#101828] text-white" : "bg-white text-black"}`}>
+    <div
+      className={`min-h-screen transition-colors duration-300 ${
+        darkmode ? "bg-[#101828] text-white" : "bg-white text-black"
+      }`}
+    >
       <Navbar darkmode={darkmode} setDarkmode={setDarkmode} />
 
-      <div className={`max-w-2xl mx-auto p-6 mt-8 rounded-lg shadow-md ${darkmode ? "bg-[#1B2431]" : "bg-gray-100"}`}>
-        <h1 className="text-3xl font-bold mb-6 text-center">Report Lost or Found Item</h1>
+      <div
+        className={`max-w-2xl mx-auto p-6 mt-8 rounded-lg shadow-md ${
+          darkmode ? "bg-[#1B2431]" : "bg-gray-100"
+        }`}
+      >
+        <h1 className="text-3xl font-bold mb-6 text-center">
+          Report Lost or Found Item
+        </h1>
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-5">
           <div className="flex justify-center gap-6">
             {["lost", "found"].map((type) => (
-              <label key={type} className="flex items-center gap-2 cursor-pointer">
+              <label
+                key={type}
+                className="flex items-center gap-2 cursor-pointer"
+              >
                 <input
                   type="radio"
                   name="type"
@@ -99,7 +120,11 @@ const ReportItem = ({ darkmode, setDarkmode }) => {
             placeholder="Item Title"
             value={formData.title}
             onChange={handleChange}
-            className={`p-3 rounded-md outline-none border ${darkmode ? "bg-[#283142] border-gray-600 text-white placeholder-gray-400" : "bg-white border-gray-300 text-black"}`}
+            className={`p-3 rounded-md outline-none border ${
+              darkmode
+                ? "bg-[#283142] border-gray-600 text-white placeholder-gray-400"
+                : "bg-white border-gray-300 text-black"
+            }`}
             required
           />
 
@@ -109,7 +134,11 @@ const ReportItem = ({ darkmode, setDarkmode }) => {
             value={formData.description}
             onChange={handleChange}
             rows="4"
-            className={`p-3 rounded-md outline-none border resize-none ${darkmode ? "bg-[#283142] border-gray-600 text-white placeholder-gray-400" : "bg-white border-gray-300 text-black"}`}
+            className={`p-3 rounded-md outline-none border resize-none ${
+              darkmode
+                ? "bg-[#283142] border-gray-600 text-white placeholder-gray-400"
+                : "bg-white border-gray-300 text-black"
+            }`}
             required
           />
 
@@ -119,16 +148,44 @@ const ReportItem = ({ darkmode, setDarkmode }) => {
             placeholder="Where was it lost/found?"
             value={formData.location}
             onChange={handleChange}
-            className={`p-3 rounded-md outline-none border ${darkmode ? "bg-[#283142] border-gray-600 text-white placeholder-gray-400" : "bg-white border-gray-300 text-black"}`}
+            className={`p-3 rounded-md outline-none border ${
+              darkmode
+                ? "bg-[#283142] border-gray-600 text-white placeholder-gray-400"
+                : "bg-white border-gray-300 text-black"
+            }`}
             required
           />
+
+          <select
+            name="category"
+            value={formData.category}
+            onChange={handleChange}
+            className={`p-3 rounded-md outline-none border ${
+              darkmode
+                ? "bg-[#283142] border-gray-600 text-white"
+                : "bg-white border-gray-300 text-black"
+            }`}
+            required
+          >
+            <option value="">Select Category</option>
+            <option value="Electronics">Electronics</option>
+            <option value="Books">Books</option>
+            <option value="Clothing">Clothing</option>
+            <option value="Bags & Containers">Bags & Containers</option>
+            <option value="Documents & Papers">Documents & Papers</option>
+            <option value="Other">Other</option>
+          </select>
 
           <input
             type="date"
             name="date"
             value={formData.date}
             onChange={handleChange}
-            className={`p-3 rounded-md outline-none border ${darkmode ? "bg-[#283142] border-gray-600 text-white" : "bg-white border-gray-300 text-black"}`}
+            className={`p-3 rounded-md outline-none border ${
+              darkmode
+                ? "bg-[#283142] border-gray-600 text-white"
+                : "bg-white border-gray-300 text-black"
+            }`}
             required
           />
 
@@ -137,13 +194,26 @@ const ReportItem = ({ darkmode, setDarkmode }) => {
             name="image"
             accept="image/*"
             onChange={handleChange}
-            className={`p-2 rounded-md border ${darkmode ? "bg-[#283142] border-gray-600 text-white" : "bg-white border-gray-300 text-black"}`}
+            className={`p-2 rounded-md border ${
+              darkmode
+                ? "bg-[#283142] border-gray-600 text-white"
+                : "bg-white border-gray-300 text-black"
+            }`}
           />
+          {formData.image && (
+            <img
+              src={URL.createObjectURL(formData.image)}
+              alt="Preview"
+              className="mt-2 max-h-48 rounded-md object-contain"
+            />
+          )}
 
           <button
             type="submit"
             disabled={uploading}
-            className={`bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-md font-semibold transition-all ${uploading ? "opacity-50 cursor-not-allowed" : ""}`}
+            className={`bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-md font-semibold transition-all ${
+              uploading ? "opacity-50 cursor-not-allowed" : ""
+            }`}
           >
             {uploading ? "Uploading..." : "Submit Report"}
           </button>

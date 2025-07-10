@@ -1,5 +1,5 @@
 import express from "express";
-import { reportItem, getItems, getMyItems, deleteItem } from "../controllers/item.controller.js";
+import { reportItem, getItems, updateItem, getMyItems, deleteItem } from "../controllers/item.controller.js";
 import { ensureAuth } from "../middlewares/auth.middleware.js";
 import { upload } from "../middlewares/upload.middleware.js";
 
@@ -14,6 +14,11 @@ router.post("/", ensureAuth, upload.single("image"), reportItem);
 // @desc    Get all items (optional ?type=lost/found)
 // @access  Public
 router.get("/", getItems);
+
+// @route   PUT /api/items/:id
+// @desc    Update user's own item
+// @access  Private
+router.put("/:id", ensureAuth, upload.single("image"), updateItem);
 
 // @route   GET /api/items/me
 // @desc    Get items reported by logged-in user

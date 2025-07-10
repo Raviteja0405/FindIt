@@ -23,6 +23,18 @@ const itemSchema = new mongoose.Schema(
     imageUrl: {
       type: String,
     },
+    category: {
+      type: String,
+      enum: [
+        "Electronics",
+        "Books",
+        "Clothing",
+        "Bags & Containers",
+        "Documents & Papers",
+        "Other",
+      ],
+      required: true,
+    },
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",

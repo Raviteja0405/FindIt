@@ -5,6 +5,7 @@ import {
   getProfile,
   updateProfile,
   deleteMyAccount,
+  completeProfile,
 } from "../controllers/user.controller.js";
 
 const router = express.Router();
@@ -13,6 +14,11 @@ const router = express.Router();
 // @desc    Get logged-in user's profile
 // @access  Private
 router.get("/me", ensureAuth, getProfile);
+
+// @route   POST /api/users/complete-profile
+// @desc    Complete user profile (called after Google OAuth)
+// @access  Private
+router.post("/complete-profile", ensureAuth, completeProfile);
 
 // @route   PUT /api/users/me
 // @desc    Update contact info

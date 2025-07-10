@@ -15,7 +15,7 @@ const Home = ({ darkmode, setDarkmode }) => {
   const fetchItems = async (pageNum = 1) => {
     setLoading(true);
     try {
-      const res = await fetch(`http://localhost:5000/api/items?page=${pageNum}&limit=3`);
+      const res = await fetch(`http://localhost:3000/api/items?page=${pageNum}&limit=3`);
       if (!res.ok) throw new Error("Failed to fetch items");
       const data = await res.json();
       // console.log(items);

@@ -34,11 +34,13 @@ const SearchFilter = ({ darkmode }) => {
               : "bg-gray-100 text-gray-700 border border-gray-300"
           } p-2 rounded-md`}
         >
-          <option>All Categories</option>
+          <option>All Categories </option>
           <option>Electronics</option>
           <option>Books</option>
           <option>Clothing</option>
-          <option>Accessories</option>
+          <option>Bags & Containers</option>
+          <option>Documents & Papers</option>
+          <option>Other</option>
         </select>
 
         <select
@@ -48,7 +50,7 @@ const SearchFilter = ({ darkmode }) => {
               : "bg-gray-100 text-gray-700 border border-gray-300"
           } p-2 rounded-md`}
         >
-          <option>All Status</option>
+          <option>All</option>
           <option>Lost</option>
           <option>Found</option>
         </select>
