@@ -1,9 +1,4 @@
-Here’s the complete README in a single copy-paste block, **including instructions about the `.env` file and a sample `.env.example` section at the bottom** for your GitHub repo:
-
-````markdown
 # FindIt — Campus Lost & Found Portal
-
-[![CI](https://github.com/Raviteja0405/FindIt/actions/workflows/ci.yml/badge.svg)](https://github.com/Raviteja0405/FindIt/actions)
 
 FindIt is a **MERN stack web application** designed to streamline the lost & found process on campus.  
 Students can **report lost items**, **browse found items**, and **contact each other** securely — making it easier to reunite people with their belongings.
