@@ -102,7 +102,6 @@ jobs:
         working-directory: ./backend
         run: npm run build --if-present
       
-      # 🔥 FIXED: Put --exclude options BEFORE the directory
       - name: Create deployment artifact
         run: |
           tar -czf backend-${{ github.sha }}.tar.gz \
